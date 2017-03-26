@@ -18,6 +18,7 @@ buildscript {
     }
 }
 
+apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: 'org.codehaus.griffon.griffon'
 apply plugin: 'net.nemerosa.versioning'
