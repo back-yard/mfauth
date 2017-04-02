@@ -1,5 +1,6 @@
 package com.indrajit
 
+import com.warrenstrange.googleauth.GoogleAuthenticator
 import griffon.core.artifact.GriffonController
 import griffon.inject.MVCMember
 import griffon.metadata.ArtifactProviderFor
@@ -11,6 +12,8 @@ class MFAuthController {
     MFAuthModel model
 
     void click() {
-        model.clickCount++
+        String sKey = "1234123412341234"
+        GoogleAuthenticator gAuth = new GoogleAuthenticator()
+        model.clickCount = gAuth.getTotpPassword(sKey)
     }
 }

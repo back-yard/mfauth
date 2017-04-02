@@ -57,6 +57,7 @@ apply plugin: 'com.github.kt3k.coveralls'
 
 dependencies {
     compile "org.codehaus.griffon:griffon-guice:${griffon.version}"
+    compile 'com.warrenstrange:googleauth:1.1.1'
 
     runtime 'org.slf4j:slf4j-simple:1.7.24'
 

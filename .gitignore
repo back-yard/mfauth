@@ -1,6 +1,7 @@
 ### build files ###
 .gradle
 build
+out
 
 ### IDE configs ###
 .idea
