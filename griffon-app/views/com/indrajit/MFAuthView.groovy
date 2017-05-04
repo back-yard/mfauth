@@ -13,18 +13,27 @@ class MFAuthView {
     @MVCMember @Nonnull
     MFAuthModel model
 
+    private store = new SecretStore()
+
+    def c = { k, v -> model.authToken.size() }
+
     void initUI() {
         builder.with {
-            application(size: [320, 160], id: 'mainWindow',
+            application(size: [320, 100], id: 'mainWindow',
                 title: application.configuration['application.title'],
                 iconImage:   imageIcon('/griffon-icon-48x48.png').image,
                 iconImages: [imageIcon('/griffon-icon-48x48.png').image,
                              imageIcon('/griffon-icon-32x32.png').image,
                              imageIcon('/griffon-icon-16x16.png').image]) {
-                gridLayout(rows: 2, cols: 1)
-                label(id: 'clickLabel', text: bind { model.clickCount },
-                     horizontalAlignment: SwingConstants.CENTER)
-                button(id: 'clickButton', clickAction)
+                gridLayout(rows: store.count(), cols: 2)
+                for(String key : store.secrtes().keySet()) {
+                    label(text: key, horizontalAlignment: SwingConstants.LEFT)
+                    label(
+                            id: key,
+                            text: bind(model.changed, source: model.authToken, converter: c.curry(key)),
+                            horizontalAlignment: SwingConstants.RIGHT
+                    )
+                }
             }
         }
     }

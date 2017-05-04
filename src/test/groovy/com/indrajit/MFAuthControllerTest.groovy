@@ -31,10 +31,10 @@ class MFAuthControllerTest {
         controller.model = artifactManager.newInstance(MFAuthModel)
 
         // when:
-        controller.invokeAction('click')
+        controller.invokeAction('updateToken')
         await().atMost(2, SECONDS)
 
         // then:
-        assert 1 == controller.model.clickCount
+        assert 1 == controller.model.authToken
     }
 }

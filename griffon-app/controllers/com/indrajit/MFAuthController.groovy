@@ -11,9 +11,28 @@ class MFAuthController {
     @MVCMember @Nonnull
     MFAuthModel model
 
-    void click() {
-        String sKey = "1234123412341234"
-        GoogleAuthenticator gAuth = new GoogleAuthenticator()
-        model.clickCount = gAuth.getTotpPassword(sKey)
+    @MVCMember @Nonnull
+    MFAuthView view
+
+    GoogleAuthenticator gAuth = new GoogleAuthenticator()
+    SecretStore store = new SecretStore()
+
+    void updateToken(String key, String sKey) {
+        model.authToken.put(key, gAuth.getTotpPassword(sKey))
+        System.out.println(model.authToken.keySet())
+        System.out.println(model.authToken.values())
     }
+
+    def updateTokenTask = new TimerTask() {
+        @Override
+        void run() {
+            for(String key : store.secrtes().keySet()) {
+                updateToken(key, store.secrtes().get(key).toString())
+            }
+            model.changed = !model.changed
+        }
+    }
+
+    def myTimer = new Timer().schedule(updateTokenTask, 10000, 10000)
+
 }
